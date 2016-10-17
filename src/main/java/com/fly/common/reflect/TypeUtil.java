@@ -9,7 +9,7 @@ import java.lang.reflect.TypeVariable;
  * Created by jinxiaofei on 16/9/21.
  */
 public class TypeUtil {
-    private static Class getClass(Type type, int i) {
+    public static Class getClass(Type type, int i) {
         if (type instanceof ParameterizedType) { // 处理泛型类型
             return getGenericClass((ParameterizedType) type, i);
         } else if (type instanceof TypeVariable) {
