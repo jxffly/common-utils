@@ -44,4 +44,11 @@ public enum ResponseCode {
     public static String getMsgByCode(int code) {
         return valueOf(code).getMsg();
     }
+
+    public static BusinessException getException(ResponseCode responseCode){
+        return  new BusinessException(responseCode.getCode(),responseCode.getMsg());
+    }
+    public static BusinessException getException(ResponseCode responseCode,Throwable t){
+        return  new BusinessException(responseCode.getCode(),responseCode.getMsg(),t);
+    }
 }
