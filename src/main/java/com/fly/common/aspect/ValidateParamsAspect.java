@@ -53,10 +53,13 @@ public class ValidateParamsAspect extends BaseAspect {
     }
 
     private String buildMsg(Set<ConstraintViolation<Object>> set) {
-        StringBuilder stringBuilder = new StringBuilder("参数错误:");
+        StringBuilder stringBuilder = new StringBuilder("参数错误:\n");
         for (ConstraintViolation<Object> constraintViolation : set) {
-            stringBuilder.append(constraintViolation.getPropertyPath()).append(":")
-                    .append(constraintViolation.getInvalidValue()).append(",");
+            stringBuilder.append("{").append(constraintViolation.getPropertyPath()).append(":")
+                    .append(constraintViolation.getInvalidValue())
+                    .append(",error:")
+                    .append(constraintViolation.getMessage())
+                    .append("},");
         }
         return stringBuilder.deleteCharAt(stringBuilder.length() - 1).toString();
     }
