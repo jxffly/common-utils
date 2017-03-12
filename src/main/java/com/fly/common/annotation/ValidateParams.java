@@ -11,4 +11,6 @@ import java.lang.annotation.*;
 public @interface ValidateParams {
     Class[] validateClass() default {};
     String[] excludes() default {};
+    
+    String[] includes() default {};
 }
