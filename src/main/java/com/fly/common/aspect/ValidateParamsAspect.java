@@ -48,7 +48,7 @@ public class ValidateParamsAspect extends BaseAspect {
     Object handle(ProceedingJoinPoint pjp) throws Throwable {
         
         if (validator == null) {
-            LOGGER.info("没有初始化校验器,因此不进行参数校验");
+            LOGGER.warn("没有初始化校验器,因此不进行参数校验");
             return pjp.proceed();
         }
         Method method = this.getMethod(pjp);
@@ -56,6 +56,14 @@ public class ValidateParamsAspect extends BaseAspect {
         ValidateParams validateParams = method.getAnnotation(ValidateParams.class);
         
         Class[] validateClass = validateParams.validateClass();
+        //如果validateClass为空，就默认获取第一个参数来作为校验的类
+        if(method.getParameterTypes().length==0){
+            LOGGER.warn("方法的参数列表为空，无法校验");
+            return pjp.proceed();
+        }
+        if(validateClass.length==0){
+            validateClass=method.getParameterTypes();
+        }
         String[] excludes = validateParams.excludes();
         String[] includes = validateParams.includes();
         Set<ConstraintViolation<Object>> set = validate(validateClass, args, excludes, includes);
